@@ -43,76 +43,76 @@ export default class App extends Component<{}> {
   };
 
   render() {
-    return (
-      <View style={{flex: 1,}}>
-        <FlatList
-          style={{flex: 1, marginTop: 40}}
-          inverted={this.state.inverted}
-          data={this.state.data}
-          extraData={this.state}
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => {
-            return (
-              <View>
-                <Text>{item.name}</Text>
-              </View>
-            )
-          }}
-        />
-        <TouchableOpacity
-          onPress={()=>{
-            this.setState({
-              inverted:!this.state.inverted
-            })
-          }}>
-          <Text>点击我翻转</Text>
-        </TouchableOpacity>
-      </View>
-
-    );
     // return (
-    //   <View style={styles.container}>
-    //     <Text style={styles.welcome}>
-    //       Welcome to React Native!
-    //     </Text>
-    //     <Text style={styles.instructions}>
-    //       To get started, edit App.js
-    //     </Text>
+    //   <View style={{flex: 1,}}>
+    //     <FlatList
+    //       style={{flex: 1, marginTop: 40}}
+    //       inverted={this.state.inverted}
+    //       data={this.state.data}
+    //       extraData={this.state}
+    //       keyExtractor={(item, index) => index}
+    //       renderItem={({item, index}) => {
+    //         return (
+    //           <View>
+    //             <Text>{item.name}</Text>
+    //           </View>
+    //         )
+    //       }}
+    //     />
     //     <TouchableOpacity
-    //       onPress={
-    //         () => {
-    //           this.createTable();
-    //         }
-    //       }>
-    //       <Text style={styles.instructions}>
-    //         打开数据库，并创建表
-    //       </Text>
+    //       onPress={()=>{
+    //         this.setState({
+    //           inverted:!this.state.inverted
+    //         })
+    //       }}>
+    //       <Text>点击我翻转</Text>
     //     </TouchableOpacity>
-    //
-    //     <TouchableOpacity
-    //       onPress={
-    //         () => {
-    //           this.insertIntoTable();
-    //         }
-    //       }>
-    //       <Text style={styles.instructions}>
-    //         插入数据
-    //       </Text>
-    //     </TouchableOpacity>
-    //
-    //     <TouchableOpacity
-    //       onPress={
-    //         () => {
-    //           this._seleDataFromTB();
-    //         }
-    //       }>
-    //       <Text style={styles.instructions}>
-    //         查询数据
-    //       </Text>
-    //     </TouchableOpacity>
-    //
     //   </View>
+    //
     // );
+    return (
+      <View style={styles.container}>
+        <Text style={styles.welcome}>
+          Welcome to React Native!
+        </Text>
+        <Text style={styles.instructions}>
+          To get started, edit App.js
+        </Text>
+        <TouchableOpacity
+          onPress={
+            () => {
+              this.createTable();
+            }
+          }>
+          <Text style={styles.instructions}>
+            打开数据库，并创建表
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={
+            () => {
+              this.insertIntoTable();
+            }
+          }>
+          <Text style={styles.instructions}>
+            插入数据
+          </Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          onPress={
+            () => {
+              this._seleDataFromTB();
+            }
+          }>
+          <Text style={styles.instructions}>
+            查询数据
+          </Text>
+        </TouchableOpacity>
+
+      </View>
+    );
   }
 
 
