@@ -8,8 +8,9 @@ import React, {Component} from 'react';
 import {
   Platform,
   StyleSheet,
+  WebView,
   Text,
-  View, TouchableOpacity, FlatList
+  View, TouchableOpacity, FlatList, NativeModules,
 } from 'react-native';
 
 import SQLite from 'react-native-sqlite-storage';
@@ -32,44 +33,77 @@ const instructions = Platform.select({
 export default class App extends Component<{}> {
 
 
+  // state = {
+  //   inverted:false,
+  //   data: [{name: 'yuddheng', age: 'sd', phone: '123444'},
+  //     {name: 'yuheng', age: 'sd', phone: '123444'},
+  //     {name: 'yuhggeng', age: 'sd', phone: '123444'},
+  //     {name: 'yuhcveng', age: 'sd', phone: '123444'},
+  //     {name: 'yuvvvvvvvheng', age: 'sd', phone: '123444'},
+  //     {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
+  // };
+
   state = {
-    inverted:false,
-    data: [{name: 'yuddheng', age: 'sd', phone: '123444'},
-      {name: 'yuheng', age: 'sd', phone: '123444'},
-      {name: 'yuhggeng', age: 'sd', phone: '123444'},
-      {name: 'yuhcveng', age: 'sd', phone: '123444'},
-      {name: 'yuvvvvvvvheng', age: 'sd', phone: '123444'},
-      {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
-  };
+    path: '',
+  }
+
+  componentDidMount() {
+    NativeModules.RNOpenDocModule.openDoc('').then(res => {
+      this.setState({
+        path: res
+      });
+      if (__DEV__) {
+        console.log('RNOpenDocModule', res);
+      }
+    })
+  }
 
   render() {
     return (
-      <View style={{flex: 1,}}>
-        <FlatList
-          style={{flex: 1, marginTop: 40}}
-          inverted={this.state.inverted}
-          data={this.state.data}
-          extraData={this.state}
-          keyExtractor={(item, index) => index}
-          renderItem={({item, index}) => {
-            return (
-              <View>
-                <Text>{item.name}</Text>
-              </View>
-            )
-          }}
-        />
-        <TouchableOpacity
-          onPress={()=>{
-            this.setState({
-              inverted:!this.state.inverted
-            })
-          }}>
-          <Text>点击我翻转</Text>
-        </TouchableOpacity>
-      </View>
+      <View style={{flex: 1}}>
+        {
+          this.state.path ? <WebView
+            style={{flex: 1}}
+            source={{ uri:this.state.path}}
+            javaScriptEnabled={true}
+            domStorageEnabled={true}
+            startInLoadingState={true}
+            scalesPageToFit={true}
+          >
 
-    );
+          </WebView> : null
+        }
+
+
+      </View>)
+    // return (
+    //   <View style={{flex: 1,}}>
+    //     <FlatList
+    //       style={{flex: 1, marginTop: 40}}
+    //       inverted={this.state.inverted}
+    //       data={this.state.data}
+    //       extraData={this.state}
+    //       keyExtractor={(item, index) => index}
+    //       renderItem={({item, index}) => {
+    //         return (
+    //           <View>
+    //             <Text>{item.name}</Text>
+    //           </View>
+    //         )
+    //       }}
+    //     />
+    //     <TouchableOpacity
+    //       onPress={()=>{
+    //         this.setState({
+    //           inverted:!this.state.inverted
+    //         })
+    //       }}>
+    //       <Text>点击我翻转</Text>
+    //     </TouchableOpacity>
+    //   </View>
+    //
+    // );
+
     // return (
     //   <View style={styles.container}>
     //     <Text style={styles.welcome}>
