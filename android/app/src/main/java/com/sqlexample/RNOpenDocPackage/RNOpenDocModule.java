@@ -7,6 +7,7 @@ import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
+import com.sqlexample.RNOpenDocPackage.utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -43,11 +44,12 @@ public class RNOpenDocModule extends ReactContextBaseJavaModule {
     public void openDoc(String path, Promise promise) {
 
         if (Environment.getExternalStorageDirectory() != null) {
-            docFile = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/" + "test.doc";
-
-            File file = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "Cache", "test.html");
+            docFile = path;
+            String catchePath = FileUtils.getFolderName(path)+"/" + "Cache";
+            String htmlName = FileUtils.getFileNameWithoutExtension(path)+".html";
+            File file = new File(catchePath, htmlName);
             if (!file.exists()) {
-                File dir = new File(Environment.getExternalStorageDirectory().getAbsolutePath() + "/" + "Cache");
+                File dir = new File(catchePath);
                 if (!dir.exists()) {
                     dir.mkdir();
                 }

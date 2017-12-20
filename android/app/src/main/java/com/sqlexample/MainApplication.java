@@ -2,6 +2,7 @@ package com.sqlexample;
 
 import android.app.Application;
 
+import com.RNFetchBlob.RNFetchBlobPackage;
 import com.facebook.react.ReactApplication;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -24,7 +25,8 @@ public class MainApplication extends Application implements ReactApplication {
         protected List<ReactPackage> getPackages() {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
-                    new RNOpenDocPackage()
+                    new RNOpenDocPackage(),
+                    new RNFetchBlobPackage()
             );
         }
 

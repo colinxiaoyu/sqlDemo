@@ -30,6 +30,8 @@ const instructions = Platform.select({
   'Shake or press menu button for dev menu',
 });
 
+import DOCView from './doc/index';
+
 export default class App extends Component<{}> {
 
 
@@ -43,38 +45,18 @@ export default class App extends Component<{}> {
   //     {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
   // };
 
-  state = {
-    path: '',
-  }
 
   componentDidMount() {
-    NativeModules.RNOpenDocModule.openDoc('').then(res => {
-      this.setState({
-        path: res
-      });
-      if (__DEV__) {
-        console.log('RNOpenDocModule', res);
-      }
-    })
+
+
   }
 
   render() {
     return (
       <View style={{flex: 1}}>
-        {
-          this.state.path ? <WebView
-            style={{flex: 1}}
-            source={{ uri:this.state.path}}
-            javaScriptEnabled={true}
-            domStorageEnabled={true}
-            startInLoadingState={true}
-            scalesPageToFit={true}
-          >
-
-          </WebView> : null
-        }
-
-
+        <DOCView
+          source={{uri: 'https://s3-ap-southeast-1.amazonaws.com/boss-job-assets/users/staging/358/resume/zcSopEEE6ctIDKDqAoFlVUBKERy2DokekSKj4XzK.doc'}}
+        />
       </View>)
     // return (
     //   <View style={{flex: 1,}}>
