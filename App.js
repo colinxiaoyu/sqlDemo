@@ -10,10 +10,11 @@ import {
   StyleSheet,
   WebView,
   Text,
-  View, TouchableOpacity, FlatList, NativeModules,
+  View, TouchableOpacity, FlatList, processColor,
 } from 'react-native';
 
 import SQLite from 'react-native-sqlite-storage';
+import CustomView from './custom-view';
 
 
 const userData = [{name: 'yuheng', age: 'sd', phone: '123444'},
@@ -35,56 +36,100 @@ import DOCView from './doc/index';
 export default class App extends Component<{}> {
 
 
-  // state = {
-  //   inverted:false,
-  //   data: [{name: 'yuddheng', age: 'sd', phone: '123444'},
-  //     {name: 'yuheng', age: 'sd', phone: '123444'},
-  //     {name: 'yuhggeng', age: 'sd', phone: '123444'},
-  //     {name: 'yuhcveng', age: 'sd', phone: '123444'},
-  //     {name: 'yuvvvvvvvheng', age: 'sd', phone: '123444'},
-  //     {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
-  // };
+  state = {
+    inverted: false,
+    data: [{name: 'yuddheng', age: 'sd', phone: '123444'},
+      {name: 'yuheng', age: 'sd', phone: '123444'},
+      {name: 'yuhggeng', age: 'sd', phone: '123444'},
+      {name: 'yuhcveng', age: 'sd', phone: '123444'},
+      {name: 'yuvvvvvvvheng', age: 'sd', phone: '123444'},
+      {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
+  };
 
+
+  componentWillMount() {
+    this.timer = setTimeout(() => {
+      this.setState({
+        inverted: true,
+      })
+    }, 2000);
+
+  }
 
   componentDidMount() {
+    console.log('componentDidMount', this.state.inverted)
 
+  }
+
+  componentWillUnmount() {
+    console.log('componentWillUnmount', this.state.inverted)
+
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('componentWillReceiveProps', this.state.inverted)
+
+  }
+
+  shouldComponentUpdate(nextProps) {
+    console.log('shouldComponentUpdate', this.state.inverted)
+    return true;
+
+  }
+
+  componentWillUpdate() {
+    console.log('componentWillUpdate', this.state.inverted)
+
+  }
+
+  componentDidUpdate() {
+    console.log('componentDidUpdate', this.state.inverted)
 
   }
 
   render() {
-    return (
-      <View style={{flex: 1}}>
-        <DOCView
-          source={{uri: 'https://s3-ap-southeast-1.amazonaws.com/boss-job-assets/users/staging/358/resume/zcSopEEE6ctIDKDqAoFlVUBKERy2DokekSKj4XzK.doc'}}
-        />
-      </View>)
     // return (
-    //   <View style={{flex: 1,}}>
-    //     <FlatList
-    //       style={{flex: 1, marginTop: 40}}
-    //       inverted={this.state.inverted}
-    //       data={this.state.data}
-    //       extraData={this.state}
-    //       keyExtractor={(item, index) => index}
-    //       renderItem={({item, index}) => {
-    //         return (
-    //           <View>
-    //             <Text>{item.name}</Text>
-    //           </View>
-    //         )
-    //       }}
+    //   <View style={{flex: 1}}>
+    //     <DOCView
+    //       source={{uri: 'https://s3-ap-southeast-1.amazonaws.com/boss-job-assets/users/staging/358/resume/zcSopEEE6ctIDKDqAoFlVUBKERy2DokekSKj4XzK.doc'}}
     //     />
-    //     <TouchableOpacity
-    //       onPress={()=>{
-    //         this.setState({
-    //           inverted:!this.state.inverted
-    //         })
-    //       }}>
-    //       <Text>点击我翻转</Text>
-    //     </TouchableOpacity>
-    //   </View>
-    //
-    // );
+    //   </View>)
+    return (
+      <View style={{flex: 1,}}>
+        <CustomView
+          ref={(customView)=>this.customView = customView}
+          style={{width: 100, height: 100}}
+          title='abc'
+          dialogue="我出来了"
+        />
+
+        <FlatList
+          style={{flex: 1, marginTop: 40}}
+          inverted={this.state.inverted}
+          data={this.state.data}
+          extraData={this.state}
+          keyExtractor={(item, index) => index}
+          renderItem={({item, index}) => {
+            return (
+              <View>
+                <Text>{item.name}</Text>
+              </View>
+            )
+          }}
+        />
+        <TouchableOpacity
+          onPress={() => {
+            this.setState({
+              inverted: !this.state.inverted
+            })
+
+            this.customView.setVisiable();
+          }}>
+          <Text>点击我翻转</Text>
+        </TouchableOpacity>
+      </View>
+
+    );
 
     // return (
     //   <View style={styles.container}>

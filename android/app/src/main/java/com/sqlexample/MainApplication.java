@@ -8,6 +8,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.sqlexample.RNCircleView.CustomViewReactPackage;
 import com.sqlexample.RNOpenDocPackage.RNOpenDocPackage;
 
 import java.util.Arrays;
@@ -26,7 +27,8 @@ public class MainApplication extends Application implements ReactApplication {
             return Arrays.<ReactPackage>asList(
                     new MainReactPackage(),
                     new RNOpenDocPackage(),
-                    new RNFetchBlobPackage()
+                    new RNFetchBlobPackage(),
+                    new CustomViewReactPackage()
             );
         }
 
