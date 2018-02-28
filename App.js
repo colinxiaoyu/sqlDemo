@@ -10,11 +10,13 @@ import {
   StyleSheet,
   WebView,
   Text,
-  View, TouchableOpacity, FlatList, processColor,
+  View, TouchableOpacity, FlatList, processColor,Dimensions
 } from 'react-native';
 
 import SQLite from 'react-native-sqlite-storage';
 import CustomView from './custom-view';
+import _ from 'lodash';
+const {width,height} = Dimensions.get('window');
 
 
 const userData = [{name: 'yuheng', age: 'sd', phone: '123444'},
@@ -44,6 +46,7 @@ export default class App extends Component<{}> {
       {name: 'yuhcveng', age: 'sd', phone: '123444'},
       {name: 'yuvvvvvvvheng', age: 'sd', phone: '123444'},
       {name: 'vvvvvvvvnnnnnyuheng', age: 'sd', phone: '123444'}],
+    isRefreshing: false
   };
 
 
@@ -57,6 +60,11 @@ export default class App extends Component<{}> {
   }
 
   componentDidMount() {
+    const a = {
+      a:1,
+      a:1
+    };
+    console.log('getkey',Object.keys(a).length);
     console.log('componentDidMount', this.state.inverted)
 
   }
@@ -72,7 +80,6 @@ export default class App extends Component<{}> {
   }
 
   shouldComponentUpdate(nextProps) {
-    console.log('shouldComponentUpdate', this.state.inverted)
     return true;
 
   }
@@ -83,7 +90,9 @@ export default class App extends Component<{}> {
   }
 
   componentDidUpdate() {
-    console.log('componentDidUpdate', this.state.inverted)
+    console.log('componentDidUpdate', this.state.inverted);
+    const check  = this.props.checked ?  this.props.checked : this.state.checked
+    console.log('componentDidUpdate', check);
 
   }
 
@@ -96,6 +105,9 @@ export default class App extends Component<{}> {
     //   </View>)
     return (
       <View style={{flex: 1,}}>
+        <View style={{backgroundColor:'red',height:40,width:width}}>
+          <Text style={{alignSelf:'center'}}>标题</Text>
+        </View>
         <CustomView
           ref={(customView)=>this.customView = customView}
           style={{width: 100, height: 100}}
@@ -104,10 +116,12 @@ export default class App extends Component<{}> {
         />
 
         <FlatList
+          onRefresh={this._onRefresh}
           style={{flex: 1, marginTop: 40}}
           inverted={this.state.inverted}
           data={this.state.data}
           extraData={this.state}
+          refreshing={this.state.isRefreshing}
           keyExtractor={(item, index) => index}
           renderItem={({item, index}) => {
             return (
@@ -176,6 +190,17 @@ export default class App extends Component<{}> {
     // );
   }
 
+  /**
+   * 下拉刷新
+   */
+  _onRefresh = () => {
+    //当前的页
+    this._page = 1;
+
+    this.setState({
+      isRefreshing: true
+    });
+  };
 
   open = () => {
     window.db = SQLite.openDatabase("test.db", "1.0", "Test Database", 200000, () => {
